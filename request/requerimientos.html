@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Req. Funcionales - Requerimientos</title>
+    <link rel="stylesheet" href="requerimientos.css">
+    <link rel="stylesheet" href="/admin/admin.css">
+    <link rel="icon" type="image/png" href="../imgs/LOGO_MUNICIPALIDAD.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="adr-header">
+        <div class="adr-header-content">
+            <div class="adr-logo-section">
+                <img src="../imgs/LOGO_MUNICIPALIDAD.png" alt="Logo Municipalidad" class="adr-logo">
+                <div class="adr-title-group">
+                    <h1 class="adr-main-title">Req. Funcionales</h1>
+                    <p class="adr-subtitle"></p>
+                </div>
+            </div>
+            <nav class="adr-nav">
+                <a href="/admin/admin.html" class="adr-nav-link">DASHBOARD</a>
+                <a href="/request/requerimientos.html" class="adr-nav-link adr-active">REQUERIMIENTOS</a>
+                <a href="#flujograma" class="adr-nav-link">FLUJOGRAMA</a>
+                <a href="/log/login.html" class="adr-nav-link adr-nav-salir">SALIR</a>
+            </nav>
+        </div>
+    </header>
+    <!-- ========== HEADER ========== -->
+    <!-- <header class="adr-header">
+        <div class="adr-header-content">
+            <button class="adr-btn-back" id="btnRegresar" title="Volver atrás">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="adr-logo-section">
+                <img src="../imgs/LOGO_MUNICIPALIDAD.png" alt="Logo Municipalidad" class="adr-logo">
+                <div class="adr-title-group">
+                    <h1 class="adr-main-title">¡Bienvenido!</h1>
+                    <p class="adr-subtitle">Hola, Administrador</p>
+                </div>
+            </div>
+            <a href="/log/login.html" class="adr-nav-link adr-nav-salir">
+                <i class="fas fa-sign-out-alt"></i>
+                SALIR
+            </a>
+        </div>
+    </header> -->
+
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
+    <main class="adr-main-container">
+        <div class="adr-content-wrapper">
+
+            <!-- ========== HERO: BÚSQUEDA Y FILTROS ========== -->
+            <section class="adr-hero-section">
+                <!-- Barra de Búsqueda -->
+                <div class="adr-search-container">
+                    <i class="fas fa-search adr-search-icon"></i>
+                    <input type="text" id="searchInput" class="adr-search-input"
+                        placeholder="Buscar requerimientos por ID, área, tipo o descripción...">
+                    <button id="clearSearch" class="adr-search-clear" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Botón Filtrar -->
+                <button class="adr-btn-filtrar" id="btnFiltrar">
+                    <i class="fas fa-filter"></i>
+                    <span>FILTRAR</span>
+                </button>
+            </section>
+
+            <!-- ========== PANEL DE FILTROS (EXPANDIBLE) ========== -->
+            <section class="adr-filtros-panel" id="filtrosPanel">
+                <div class="adr-filtros-content">
+                    <h3><i class="fas fa-sliders-h"></i> Filtros Avanzados</h3>
+
+                    <div class="adr-filtros-grid">
+                        <!-- Filtro por Fecha -->
+                        <div class="adr-filtros-group">
+                            <label>Por Fecha:</label>
+                            <div class="adr-filtro-rango">
+                                <input type="date" id="filtroFechaDesde" class="adr-filtro-input" placeholder="Desde">
+                                <span class="adr-filtro-separator">-</span>
+                                <input type="date" id="filtroFechaHasta" class="adr-filtro-input" placeholder="Hasta">
+                            </div>
+                        </div>
+
+                        <!-- Filtro por Área -->
+                        <div class="adr-filtros-group">
+                            <label>Por Área:</label>
+                            <select id="filtroArea" class="adr-filtro-select">
+                                <option value="">Todas las áreas</option>
+                                <option value="Catastro">Catastro</option>
+                                <option value="Maquinarias">Maquinarias</option>
+                                <option value="Obras">Obras</option>
+                                <option value="Medio Ambiente">Medio Ambiente</option>
+                                <option value="Mercados">Mercados</option>
+                                <option value="Transporte">Transporte</option>
+                                <option value="Seguridad">Seguridad Ciudadana</option>
+                            </select>
+                        </div>
+
+                        <!-- Filtro por Tipo -->
+                        <div class="adr-filtros-group">
+                            <label>Por Tipo:</label>
+                            <select id="filtroTipo" class="adr-filtro-select">
+                                <option value="">Todos los tipos</option>
+                                <option value="Bien">Bien</option>
+                                <option value="Servicio">Servicio</option>
+                                <option value="Obra">Obra</option>
+                            </select>
+                        </div>
+
+                        <!-- Filtro por Monto -->
+                        <div class="adr-filtros-group">
+                            <label>Por Monto:</label>
+                            <div class="adr-filtro-rango">
+                                <input type="number" id="filtroMontoMin" class="adr-filtro-input" placeholder="Mínimo"
+                                    min="0" step="0.01">
+                                <span class="adr-filtro-separator">-</span>
+                                <input type="number" id="filtroMontoMax" class="adr-filtro-input" placeholder="Máximo"
+                                    min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <!-- Filtro por Estado -->
+                        <div class="adr-filtros-group">
+                            <label>Por Estado:</label>
+                            <select id="filtroEstado" class="adr-filtro-select">
+                                <option value="">Todos los estados</option>
+                                <option value="PENDIENTE">Pendiente</option>
+                                <option value="EN PROCESO">En Proceso</option>
+                                <option value="FINALIZADO">Finalizado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botones del Filtro -->
+                    <div class="adr-filtros-buttons">
+                        <button class="adr-btn-aplicar-filtros">
+                            <i class="fas fa-check"></i>
+                            Aplicar Filtros
+                        </button>
+                        <button class="adr-btn-limpiar-filtros">
+                            <i class="fas fa-eraser"></i>
+                            Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== TABLA DE REQUERIMIENTOS ========== -->
+            <section class="adr-table-section">
+                <div class="adr-table-container">
+                    <table class="adr-requerimientos-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>FECHA</th>
+                                <th>ÁREA</th>
+                                <th>TIPO</th>
+                                <th>MONTO</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargan dinámicamente desde Firebase -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ========== MODAL DE DETALLES ========== -->
+    <div class="adr-modal" id="modalDetalles">
+        <div class="adr-modal-overlay"></div>
+        <div class="adr-modal-content">
+            <!-- Header del Modal -->
+            <div class="adr-modal-header">
+                <div class="adr-modal-title">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>DETALLES DEL REQUERIMIENTO</h2>
+                </div>
+                <button class="adr-modal-close" id="btnCerrarModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <div class="adr-modal-body">
+                <!-- Información del Requerimiento -->
+                <div class="adr-modal-info-grid">
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-hashtag"></i>
+                        <div>
+                            <span class="adr-modal-label">ID</span>
+                            <span class="adr-modal-value" id="modalId">-</span>
+                        </div>
+                    </div>
+
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-calendar"></i>
+                        <div>
+                            <span class="adr-modal-label">Fecha</span>
+                            <span class="adr-modal-value" id="modalFecha">-</span>
+                        </div>
+                    </div>
+
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <span class="adr-modal-label">Área</span>
+                            <span class="adr-modal-value" id="modalArea">-</span>
+                        </div>
+                    </div>
+
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-tag"></i>
+                        <div>
+                            <span class="adr-modal-label">Tipo</span>
+                            <span class="adr-modal-value" id="modalTipo">-</span>
+                        </div>
+                    </div>
+
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div>
+                            <span class="adr-modal-label">Monto</span>
+                            <span class="adr-modal-value" id="modalMonto">-</span>
+                        </div>
+                    </div>
+
+                    <div class="adr-modal-info-item">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <span class="adr-modal-label">Estado</span>
+                            <span class="adr-modal-value" id="modalEstado">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="adr-modal-section">
+                    <h3><i class="fas fa-align-left"></i> Descripción</h3>
+                    <p class="adr-modal-descripcion" id="modalDescripcion">-</p>
+                </div>
+
+                <!-- Cambiar Estado -->
+                <div class="adr-modal-section">
+                    <h3><i class="fas fa-exchange-alt"></i> Cambiar Estado</h3>
+                    <div class="adr-estado-buttons">
+                        <button class="adr-estado-btn adr-estado-pendiente" data-estado="PENDIENTE">
+                            <i class="fas fa-clock"></i> PENDIENTE
+                        </button>
+                        <button class="adr-estado-btn adr-estado-proceso" data-estado="EN PROCESO">
+                            <i class="fas fa-spinner"></i> EN PROCESO
+                        </button>
+                        <button class="adr-estado-btn adr-estado-finalizado" data-estado="FINALIZADO">
+                            <i class="fas fa-check-circle"></i> FINALIZADO
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comentarios del Admin -->
+                <div class="adr-modal-section">
+                    <h3><i class="fas fa-comment-dots"></i> Agregar Comentario</h3>
+                    <textarea id="modalComentario" class="adr-modal-textarea"
+                        placeholder="Escribe un comentario que será visible para el usuario..." rows="4"></textarea>
+                    <button class="adr-btn-guardar-comentario" id="btnGuardarComentario">
+                        <i class="fas fa-save"></i>
+                        Guardar Comentario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== NOTIFICACIÓN ========== -->
+    <div class="adr-notification" id="notificacion">
+        <i class="fas fa-check-circle"></i>
+        <span>Operación exitosa</span>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, collection, onSnapshot
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // Configuración corregida
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-V6hfGyOETDNxJf8Stb9DujbxQTIM76c",
+            authDomain: "web-requerimientos.firebaseapp.com",
+            projectId: "web-requerimientos",
+            storageBucket: "web-requerimientos.appspot.com",
+            messagingSenderId: "707688130249",
+            appId: "1:707688130249:web:c46b6252c46083b6e9cf18",
+            measurementId: "G-TV2C27SXD3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // 🔒 Verifica sesión activa
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                document.querySelector('.adr-subtitle').textContent = `Hola, ${user.email}`;
+            } else {
+                window.location.href = "/log/login.html";
+            }
+        });
+    </script>
+    <script type="module" src="/request/requerimientos.js"></script>
+</body>
+
+</html>
